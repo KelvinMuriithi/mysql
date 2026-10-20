@@ -4,3 +4,18 @@ default-authentication-plugin=mysql_native_password
 
 # Listen on all interfaces
 bind-address=0.0.0.0
+
+# Memory: keep MySQL well inside the 512 MB Starter instance.
+# With the defaults MySQL 8 used ~410 MB idle and ~510 MB under load, and Render
+# restarted it for using over 512 MB. With these settings: ~135 MB idle, ~215 MB under load.
+# Performance Schema is MySQL's own diagnostics; it uses ~250 MB and is not needed by the app.
+performance_schema=OFF
+# Data cache. Raise it (or move to a bigger plan) when the data grows well past this.
+innodb_buffer_pool_size=128M
+# The app needs far fewer than the default 151.
+max_connections=40
+# X Protocol (port 33060) is not used by the app.
+mysqlx=OFF
+table_open_cache=400
+tmp_table_size=16M
+max_heap_table_size=16M
